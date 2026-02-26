@@ -20,10 +20,6 @@ function App() {
   const { data, isFetching, isError, error } = useIsLoginQuery();
   const dispatch = useDispatch();
 
-  if (isError) {
-    alert(error.data.message)
-  }
-
 
 
   if (!data?.isLogin) {
@@ -76,9 +72,7 @@ function App() {
     {
       path: '/getVerificationEmail',
       element: (
-        // <ProtectedRoute>
         <VerificationPage />
-        //  </ProtectedRoute> 
       )
     }
   ])
