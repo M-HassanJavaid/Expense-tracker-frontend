@@ -25,7 +25,8 @@ const VerificationPage = () => {
             setIsSent(true)
 
         } catch (error) {
-            alert(error.message)
+            alert(error?.message || error?.data?.message || 'Unknown error');
+            console.log(error)
         }
     }
 
