@@ -8,6 +8,7 @@ import Loader from '../../components/Inputs/Loader';
 import { useLoginMutation } from '../../services/authApi';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../features/authSlice';
+import dashboardApi from '../../services/dashboardApi';
 
 const Login = () => {
 
@@ -49,9 +50,8 @@ const Login = () => {
                 return;
             }
 
-
+            dispatch(dashboardApi.util.invalidateTags(['Overview']))
             
-    
 
             navigate('/')
 

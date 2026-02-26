@@ -36,7 +36,7 @@ const IncomeGrpah = ({ data }) => {
 
   return (
     <div className="bg-white p-4 md:p-8 rounded-b-3xl shadow-sm border border-gray-100 w-full">
-      <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4 md:mb-8">Last 10 {action.slice(1)}s</h2>
+      <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4 md:mb-8">Recent {action.slice(1)}s</h2>
       
       <div className="h-64 md:h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">

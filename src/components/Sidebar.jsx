@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLogoutMutation } from '../services/authApi';
 import { setLogin, setLogout } from '../features/authSlice';
+import dashboardApi from '../services/dashboardApi';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -31,6 +32,8 @@ const Sidebar = ({isSidebarOpen}) => {
             }
 
             dispatch(setLogout());
+            dispatch(dashboardApi.util.invalidateTags(['Overview']))
+            
             navigate('/login')
 
         } catch (error) {

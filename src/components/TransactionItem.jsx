@@ -1,5 +1,9 @@
 import React from 'react';
 import { HiArrowTrendingUp, HiArrowTrendingDown } from "react-icons/hi2";
+import { MdDeleteOutline } from "react-icons/md";
+import { useDeleteTransactionMutation } from '../services/TransactionApi';
+import dashboardApi from '../services/dashboardApi';
+import { useDispatch } from 'react-redux';
 
 const formatReadableDate = (isoString) => {
   if (!isoString) return "";
@@ -39,9 +43,27 @@ const TransactionItem = ({
 }) => {
 
   const isIncome = action === 'income';
+  const dispatch = useDispatch()
+
+  const [deleteFetch , { isLoading }] = useDeleteTransactionMutation();
+
+  const handleDelete = async () => {
+    try {
+      let isConfirm = confirm('Are you really want to delete this transaction?');
+      if (!isConfirm) return;
+      let res = await deleteFetch(_id).unwrap();
+      dispatch(dashboardApi.util.invalidateTags(['Overview']))
+      
+      alert('Transaction deleted successfully!');
+    } catch (error) {
+      alert( error?.message || error?.data?.message || 'Failed to delete transaction');
+    }
+  };
+
+
 
   return (
-    <div className="flex items-center justify-between p-3 bg-white rounded-2xl w-full border border-gray-50/50">
+    <div className={`flex items-center justify-between p-3 bg-white rounded-2xl w-full border border-gray-50/50 ${isLoading && 'opacity-50 pointer-events-none'}`}>
       {/* Left Section: Emoji Icon and Details */}
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center w-12 h-12 bg-gray-50 rounded-full text-2xl">
@@ -57,19 +79,29 @@ const TransactionItem = ({
         </div>
       </div>
 
-      {/* Right Section: Dynamic Badge */}
-      <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs flex-nowrap ${isIncome
-          ? 'bg-green-50 text-green-500'
-          : 'bg-red-50 text-red-500'
-        }`}>
-        <span className='text-nowrap'>
-          {isIncome ? '+' : '-'} ${Math.abs(amount).toLocaleString()}
-        </span>
-        {isIncome ? (
-          <HiArrowTrendingUp size={16} />
-        ) : (
-          <HiArrowTrendingDown size={16} />
-        )}
+      {/* Right Section: Dynamic Badge and Delete */}
+      <div className="flex items-center gap-3">
+        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs flex-nowrap ${isIncome
+            ? 'bg-green-50 text-green-500'
+            : 'bg-red-50 text-red-500'
+          }`}>
+          <span className='text-nowrap'>
+            {isIncome ? '+' : '-'} ${Math.abs(amount).toLocaleString()}
+          </span>
+          {isIncome ? (
+            <HiArrowTrendingUp size={16} />
+          ) : (
+            <HiArrowTrendingDown size={16} />
+          )}
+        </div>
+        <button
+          onClick={handleDelete}
+          disabled={isLoading}
+          className="text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50 cursor-pointer"
+          title="Delete transaction"
+        >
+          <MdDeleteOutline size={20} />
+        </button>
       </div>
     </div>
   );

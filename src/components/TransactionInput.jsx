@@ -11,7 +11,7 @@ const TransactionInput = ({ setIsInputOpen }) => {
   const [source, setSource] = useState('')
   const [description, setDescription] = useState('')
   const [icon, setIcon] = useState('')
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0])
   const [amount, setAmount] = useState('');
   const location = useLocation();
   const dispatch = useDispatch();

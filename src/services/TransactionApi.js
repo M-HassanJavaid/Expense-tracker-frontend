@@ -28,6 +28,14 @@ const transactionApi = createApi({
             invalidatesTags: ['Transactions']
         }),
 
+        deleteTransaction: builder.mutation({
+            query: (id)=>({
+                url: `/delete/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Transactions']
+        })
+
     })
 })
 

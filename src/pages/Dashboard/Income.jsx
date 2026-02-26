@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/layouts/DashboardLayout'
 import TransactionOverview from '../../components/TransactionOverview'
 import TransactionInput from '../../components/TransactionInput'
 import { useGetTransactionsQuery } from '../../services/TransactionApi'
-import IncomeGrpah from '../../components/IncomeGrpah'
+import IncomeGrpah from '../../components/transactionGraph'
 import TransactionHistory from '../../components/TransactionHistory'
 
 const Income = () => {
